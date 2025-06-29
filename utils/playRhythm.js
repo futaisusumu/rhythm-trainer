@@ -58,18 +58,25 @@ export const playRhythm = async (notes) => {
   Tone.Transport.cancel();
   Tone.Transport.bpm.value = BPM;
 
-  // ノートの長さを拍数で定義
-  const lengths = { e: 0.5, q: 1, h: 2, er: 0.5, qr: 1, hr: 2 };
+  // ノートの長さを拍数と実際の音の長さで定義
+  const lengths = {
+    e: { beats: 0.5, duration: '8n' },
+    q: { beats: 1, duration: '4n' },
+    h: { beats: 2, duration: '2n' },
+    er: { beats: 0.5, duration: '8n' },
+    qr: { beats: 1, duration: '4n' },
+    hr: { beats: 2, duration: '2n' },
+  };
 
   let beat = 0;
   notes.forEach((note) => {
-    const duration = lengths[note] ?? 1;
+    const info = lengths[note] ?? { beats: 1, duration: '4n' };
     if (!String(note).endsWith('r')) {
       Tone.Transport.scheduleOnce((time) => {
-        synth.triggerAttackRelease('C5', '8n', time);
+        synth.triggerAttackRelease('C5', info.duration, time);
       }, beat);
     }
-    beat += duration;
+    beat += info.beats;
   });
 
   // 演奏終了まで待つ
