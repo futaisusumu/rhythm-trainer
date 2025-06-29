@@ -4,7 +4,7 @@ import { playCountIn, playRhythm } from '../../utils/playRhythm.js';
 import { QUESTIONS } from '../data/questions.js';
 
 const RhythmQuiz = () => {
-  const [question, setQuestion] = useState(QUESTIONS[0]);
+  const [question] = useState(QUESTIONS[0]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [isAnswered, setIsAnswered] = useState(false);
