@@ -43,15 +43,26 @@ export const playRhythm = async (notes) => {
   await Tone.start();
   const synth = new Tone.Synth().toDestination();
 
-  const interval = 60 / BPM; // 1拍の長さ（秒）
-  const now = Tone.now();
+  // Transportの設定をカウントと合わせる
+  Tone.Transport.stop();
+  Tone.Transport.cancel();
+  Tone.Transport.bpm.value = BPM;
 
-  notes.forEach((note, index) => {
-    synth.triggerAttackRelease("C5", "8n", now + index * interval);
+  // ノートの長さを拍数で定義
+  const lengths = { e: 0.5, q: 1, h: 2 };
+
+  let beat = 0;
+  notes.forEach((note) => {
+    const duration = lengths[note] ?? 1;
+    Tone.Transport.scheduleOnce((time) => {
+      synth.triggerAttackRelease('C5', '8n', time);
+    }, beat);
+    beat += duration;
   });
 
-  // 全部の音が終わるまで待つ
-  await new Promise(resolve =>
-    setTimeout(resolve, interval * notes.length * 1000)
-  );
+  // 演奏終了まで待つ
+  await new Promise((resolve) => {
+    Tone.Transport.scheduleOnce(() => resolve(), beat);
+    Tone.Transport.start();
+  });
 };
