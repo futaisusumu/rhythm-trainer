@@ -24,11 +24,15 @@ const RhythmScore = ({ notes }) => {
             if (d === 'er') { duration = '8r'; keys = ['b/4']; }
             if (d === 'qr') { duration = '4r'; keys = ['b/4']; }
             if (d === 'hr') { duration = '2r'; keys = ['b/4']; }
-            return new StaveNote({
+            const note = new StaveNote({
                 keys,
                 duration,
                 stem_direction: 1
             });
+            if (note.isRest()) {
+                note.setKeyLine(0, 0); // 休符をライン上に配置
+            }
+            return note;
         });
 
         const beams = [];
