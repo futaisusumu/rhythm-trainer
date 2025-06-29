@@ -27,6 +27,7 @@ const RhythmQuiz = () => {
     return <p>Loading...</p>;
   }
 
+
   const handleStart = async () => {
     setIsPlaying(true);
     await playCountIn();
