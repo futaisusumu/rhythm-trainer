@@ -15,13 +15,13 @@ const RhythmScore = ({ notes }) => {
             spaceAboveStaffLn: 0,
             spaceBelowStaffLn: 0,
         });
-        stave.setNumLines(1); // ✅ ← これが正解！
+        //stave.setNumLines(3); // ✅ ← これが正解！
         stave.setContext(context).draw();
 
 
         const vfNotes = notes.map(d => {
             let duration = '4';
-            let keys = ['f/5'];
+            let keys = ['f/4'];
             if (d === 'e') duration = '8';
             if (d === 'h') duration = '2';
             if (d === 'er') { duration = '8r'; keys = ['r/4']; }
@@ -34,8 +34,11 @@ const RhythmScore = ({ notes }) => {
             });
             note.setStave(stave); // スタッフを設定して位置計算を安定させる
             note.setContext(context);
+
             if (note.isRest()) {
-                note.setKeyLine(0, 0); // 休符をライン上に配置
+                note.setStave(stave);
+                note.setContext(context);
+                note.setYShift(-40); // ✅ ← ← ← ここで直接上に移動させる（数値は調整可能）
             }
             return note;
         });
