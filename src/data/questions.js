@@ -3,12 +3,12 @@
 export const QUESTIONS = [
   {
     id: 1,
-    correct: ['e', 'e', 'e', 'e'],
+    correct: ['q', 'e', 'e', 'qr', 'q'],
     choices: [
-      ['e', 'e', 'e', 'e'],
-      ['q', 'q', 'q', 'q'],
-      ['q', 'h'],
-      ['h', 'q', 'q'],
+      ['q', 'e', 'e', 'qr', 'q'],
+      ['q', 'qr', 'q', 'e', 'e'],
+      ['q', 'qr', 'qr', 'q'],
+      ['q', 'e', 'e', 'q', 'qr'],
     ]
   }
 ];

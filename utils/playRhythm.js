@@ -1,7 +1,7 @@
 import * as Tone from 'tone';
 
 // ✅ テンポ（BPM）は1か所で管理
-export const BPM = 80;
+export const BPM = 100;
 
 /**
  * カウントイン（4拍）を安定したテンポで再生
@@ -49,14 +49,16 @@ export const playRhythm = async (notes) => {
   Tone.Transport.bpm.value = BPM;
 
   // ノートの長さを拍数で定義
-  const lengths = { e: 0.5, q: 1, h: 2 };
+  const lengths = { e: 0.5, q: 1, h: 2, er: 0.5, qr: 1, hr: 2 };
 
   let beat = 0;
   notes.forEach((note) => {
     const duration = lengths[note] ?? 1;
-    Tone.Transport.scheduleOnce((time) => {
-      synth.triggerAttackRelease('C5', '8n', time);
-    }, beat);
+    if (!String(note).endsWith('r')) {
+      Tone.Transport.scheduleOnce((time) => {
+        synth.triggerAttackRelease('C5', '8n', time);
+      }, beat);
+    }
     beat += duration;
   });
 

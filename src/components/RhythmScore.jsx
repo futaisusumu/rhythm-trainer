@@ -18,12 +18,16 @@ const RhythmScore = ({ notes }) => {
 
         const vfNotes = notes.map(d => {
             let duration = '4';
+            let keys = ['f/5'];
             if (d === 'e') duration = '8';
             if (d === 'h') duration = '2';
+            if (d === 'er') { duration = '8r'; keys = ['b/4']; }
+            if (d === 'qr') { duration = '4r'; keys = ['b/4']; }
+            if (d === 'hr') { duration = '2r'; keys = ['b/4']; }
             return new StaveNote({
-                keys: ['f/5'],         // ← 1本線に乗る
+                keys,
                 duration,
-                stem_direction: 1      // ← 上向き
+                stem_direction: 1
             });
         });
 
@@ -31,7 +35,7 @@ const RhythmScore = ({ notes }) => {
         let beamGroup = [];
 
         for (const note of vfNotes) {
-            if (note.getDuration() === '8') {
+            if (note.getDuration() === '8' && !note.isRest()) {
                 beamGroup.push(note);
                 if (beamGroup.length === 2) {
                     beams.push(new Beam(beamGroup, false)); // ← 2個ずつで生成
