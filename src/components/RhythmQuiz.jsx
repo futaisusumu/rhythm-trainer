@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import RhythmScore from './RhythmScore.jsx';
 import { playCountIn, playRhythm } from '../../utils/playRhythm.js';
-import { generateQuestion } from '../../utils/generateQuestions.js';
+import QUESTIONS from '../data/questions.js';
 
-const QUESTION_COUNT = 5;
+const QUESTION_COUNT = QUESTIONS.length;
 
 const RhythmQuiz = () => {
   const [questions, setQuestions] = useState([]);
@@ -14,11 +14,7 @@ const RhythmQuiz = () => {
   const [score, setScore] = useState(0);
 
   useEffect(() => {
-    const qs = [];
-    for (let i = 0; i < QUESTION_COUNT; i++) {
-      qs.push(generateQuestion(i + 1));
-    }
-    setQuestions(qs);
+    setQuestions(QUESTIONS);
   }, []);
 
   const question = questions[current];
