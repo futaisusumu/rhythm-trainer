@@ -32,6 +32,8 @@ const RhythmScore = ({ notes }) => {
                 duration,
                 stem_direction: 1
             });
+            note.setStave(stave); // スタッフを設定して位置計算を安定させる
+            note.setContext(context);
             if (note.isRest()) {
                 note.setKeyLine(0, 0); // 休符をライン上に配置
             }
