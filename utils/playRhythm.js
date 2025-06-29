@@ -41,7 +41,17 @@ export const playRhythm = async (notes) => {
   }
 
   await Tone.start();
-  const synth = new Tone.Synth().toDestination();
+  const synth = new Tone.Synth({
+    oscillator: {
+      type: 'square'
+    },
+    envelope: {
+      attack: 0.01,
+      decay: 0.1,
+      sustain: 0.3,
+      release: 0.2
+    }
+  }).toDestination();
 
   // Transportの設定をカウントと合わせる
   Tone.Transport.stop();
