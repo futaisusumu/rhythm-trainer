@@ -11,7 +11,10 @@ const RhythmScore = ({ notes }) => {
         renderer.resize(220, 140);
         const context = renderer.getContext();
 
-        const stave = new Stave(10, 40, 220);
+        const stave = new Stave(10, 40, 220, {
+            spaceAboveStaffLn: 0,
+            spaceBelowStaffLn: 0,
+        });
         stave.setNumLines(1); // ✅ ← これが正解！
         stave.setContext(context).draw();
 
@@ -21,9 +24,9 @@ const RhythmScore = ({ notes }) => {
             let keys = ['f/5'];
             if (d === 'e') duration = '8';
             if (d === 'h') duration = '2';
-            if (d === 'er') { duration = '8r'; keys = ['b/4']; }
-            if (d === 'qr') { duration = '4r'; keys = ['b/4']; }
-            if (d === 'hr') { duration = '2r'; keys = ['b/4']; }
+            if (d === 'er') { duration = '8r'; keys = ['r/4']; }
+            if (d === 'qr') { duration = '4r'; keys = ['r/4']; }
+            if (d === 'hr') { duration = '2r'; keys = ['r/4']; }
             const note = new StaveNote({
                 keys,
                 duration,
